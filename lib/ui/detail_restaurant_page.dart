@@ -35,9 +35,26 @@ class BodyDetailRestaurantPage extends StatelessWidget {
     return Scaffold(
       body: Consumer<DetailRestaurantProvider>(
         builder: (context, state, _) {
-          return ContentDetailRestaurantPage(
-            state: state,
-          );
+          if (state.state == ResultState.HasData) {
+            return Center(
+              /// Jangan panggil state.detailRestaurant
+              /// juga jangan panggil state keseluruhan
+              /// diluar ResultState.HasData
+              child: Text('ada data' + state.detailRestaurant.toString()),
+            );
+          } else if (state.state == ResultState.Error) {
+            return Center(
+              child: Text('error: ${state.message}'),
+            );
+          } else {
+            return Center(
+              child: Text('loading'),
+            );
+          }
+
+          // return ContentDetailRestaurantPage(
+          //   state: state,
+          // );
 
           // if (state.state == ResultState.Loading) {
           //   return Column(
